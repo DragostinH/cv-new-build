@@ -1,0 +1,47 @@
+.contact-info{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 25% 1fr;
+  }
+
+.info{
+    display:flex;
+    gap: 0.5rem;
+}
+  h1{
+      text-transform: uppercase;
+      font-weight: 250;
+      font-size: 4rem;
+      margin:0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  
+  .name-logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .box {
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    border: 1px solid black;
+  }
+  
+  .box > span{
+    font-size: 2.3rem;
+    transform: rotate(-45deg);
+  }
+  
+  .separator{
+    width: 1px;
+    height: 60px;
+    background-color: black;
+  }
