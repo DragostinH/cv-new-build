@@ -1,0 +1,13 @@
+.current-projects{
+    display: grid;
+    grid-template-columns: 25% 1fr;
+}
+
+.left-projects{
+    text-align: center;
+}
+
+ul{
+    height: min-content;
+    padding: 0;
+}
