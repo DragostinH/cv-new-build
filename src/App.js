@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import './styles/App.scss';
 import ContactAndName from './components/ContactAndName';
 import CurrentProjects from './components/CurrentProjects';
+import Experience from './components/Experience';
 import Summary from './components/Summary';
+import Skills from './components/Skills';
+import EducationAndTraining from './components/EducationAndTraining';
+import Accomplishments from './components/Accomplishments';
 
 class App extends Component {
   constructor(props) {
@@ -30,17 +34,8 @@ class App extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-      contactInfo: {
-        firstName: this.state.contactInfo.firstName,
-        lastName: this.state.contactInfo.lastName,
-        email: this.state.contactInfo.email,
-        tel: this.state.contactInfo.tel,
-        country: this.state.contactInfo.country,
-        city: this.state.contactInfo.city,
-        postCode: this.state.contactInfo.postCode,
-        input: false,
-      }
+    this.setState(st => {
+      return st.contactInfo.input = false;
     })
   }
 
@@ -81,6 +76,10 @@ class App extends Component {
         />
         <CurrentProjects />
         <Summary />
+        <Skills />
+        <Experience />
+        <EducationAndTraining />
+        <Accomplishments />
       </div>
     );
   }

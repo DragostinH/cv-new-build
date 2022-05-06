@@ -1,10 +1,12 @@
 .current-projects{
     display: grid;
     grid-template-columns: 25% 1fr;
+    border-bottom: 1px solid black;
+
 }
 
 .left-projects{
-    text-align: center;
+    text-align: left;
 }
 
 ul{
