@@ -3,3 +3,13 @@
     grid-template-columns: 25% 1fr;
     border-bottom: 1px solid black;
 }
+
+.title-and-period{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.experience-container:hover{
+    border: thick double green;
+}

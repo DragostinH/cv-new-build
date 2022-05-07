@@ -6,6 +6,13 @@
 
   }
 
+  .overlay{
+    border: thick double white;
+    background-color: rgba($color: #000000, $alpha: 0);
+    width: 100%;
+    height: 100%;
+  }
+
 .info{
     display:flex;
     gap: 0.5rem;
@@ -50,15 +57,26 @@
 
   .contactInfo-form {
     display: grid;
-    gap: 1rem;
+    gap: 0.5rem;
     width: min-content;
-    align-items: center;
+    // align-items: center;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   }
 
+  #submit{
+    grid-column: 2/4;
+  }
+
   label > input{
     font-size: large;
-    padding: 0.5rem;
+    padding: 0.2rem;
   }
+
+.overlay:hover{
+  border: thick double rgb(91, 207, 67);
+  background-color: rgba($color: #77e999, $alpha: 0.3);
+  cursor: pointer;
+  z-index: 999;
+}
