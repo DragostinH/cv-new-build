@@ -1,88 +1,91 @@
 import React, { Component } from "react";
 import "../styles/CurrentProjects.scss"
 
-class CurrentProjects extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            input: false,
-            projects: ["https://github.com/DragostinH?tab=stars"],
-            text: "",
-            addBtn: false,
-        }
-    }
+export default function CurrentProjects() {
+    const [state, setState] = React.useState({
+        input: false,
+        projectOne: "https://github.com/DragostinH?tab=stars",
+        projectTwo: "",
+        projectThree: "",
+    })
+    let element;
+    let arr = [state.projectOne, state.projectTwo, state.projectThree]
 
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({
-            projects: this.state.projects.concat(this.state.text),
-            text: "",
-            addBtn: false
-        })
+        if (state.projectOne.trim() !== "") {
+            setState({
+                ...state,
+                input: false,
+                projectOne: state.projectOne,
+                projectTwo: state.projectTwo,
+                projectThree: state.projectThree,
+            })
+
+        } else {
+            setState({
+                ...state,
+                input: false,
+            })
+        }
     }
 
-    handleOnChange = (e) => {
-        this.setState({
-            text: e.target.value
-        })
-    }
-
-    removeProject = (e, project) => {
-        let arr = Array.from(this.state.projects).filter(item => {
-            return item !== project
+    const handleOnChange = (e) => {
+        setState({
+            ...state,
+            [`${e.target.name}`]: e.target.value,
         });
-        this.setState({
-            projects: arr
+    }
+
+    const handleEditProjects = () => {
+        setState({
+            ...state,
+            input: true,
         })
     }
 
 
-    handleAddProject = () => {
-        if (this.state.addBtn) {
-            this.setState(st => {
-                return st.addBtn = false;
-            })
-        } else {
-            this.setState(st => {
-                return st.addBtn = true;
-            })
-        }
-    }
 
-    render() {
-        const { projects, addBtn } = this.state;
-        let info;
-        let addProject;
-
-        if (addBtn) {
-            addProject = (
-                <form onSubmit={this.handleSubmit} action="">
-                    <input onChange={this.handleOnChange} type="text" name="project" id="project" />
-                    <input type="submit" name="submit" id="submit" />
+    if (state.input) {
+        element = (
+            <div className="edit-projects-page">
+                <form className="project-form" onSubmit={handleSubmit} action="">
+                    <label htmlFor="projectOne"> <p>Project Link One</p>
+                        <input onChange={handleOnChange} value={state.projectOne}
+                            placeholder={state.projectOne} className="projects projectOne" type="text" name="projectOne" id="projectOne" />
+                    </label>
+                    <label htmlFor="projectTwo"> <p>Project Link Two</p>
+                        <input onChange={handleOnChange} value={state.projectTwo} className="projects projectTwo" type="text" name="projectTwo" id="projectTwo" />
+                    </label>
+                    <label htmlFor="projectThree"> <p>Project Link Three</p>
+                        <input onChange={handleOnChange} value={state.projectThree} className="projects projectThree" type="text" name="projectThree" id="projectThree" />
+                    </label>
+                    <input type="submit" name="submitProjects" id="submitProjects" value={"Submit"} />
                 </form>
-            )
-        } else {
-            addProject =
-                <button onClick={this.handleAddProject}>Add Project</button>
-        }
-
-        return (
+            </div >
+        )
+    } else {
+        element =
             <div className="current-projects">
                 <div className="left-projects">
                     <p>Current Projects</p>
                 </div>
-                <ul>
-                    {projects.map(project => {
-                        return <li key={project.toString()} >{project}
-                            <button onClick={(e) => this.removeProject(e, project.toString())}>Delete</button></li>
-                    })}
-                    {addProject}
-                </ul>
-
+                <div className="right-projects">
+                    <ul>
+                        <li>{state.projectOne}</li>
+                        <li>{state.projectTwo}</li>
+                        <li>{state.projectThree}</li>
+                    </ul>
+                    {element}
+                </div>
             </div>
-        )
-
     }
+    return (
+        <div onClick={handleEditProjects} className="overlay">
+            {element}
+        </div>)
+
+
+
 }
 
-export default CurrentProjects;

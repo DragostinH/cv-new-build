@@ -34,24 +34,29 @@ class Summary extends Component {
         let element;
         if (this.state.input) {
             element =
-                <form onSubmit={this.handleSubmit} action="">
-                    <textarea onChange={this.handleOnChange} name="summary" value={this.state.summary} maxLength={350} id="summary" cols="30" rows="10"></textarea>
-                    <input type="submit" name="submit-summary" id="submit-summary" />
-                </form>
+                <div className="edit-summary-page">
+                    <form onSubmit={this.handleSubmit} action="">
+                        <textarea onChange={this.handleOnChange} name="summary" value={this.state.summary} maxLength={350} id="summary" cols="30" rows="10"></textarea>
+                        <input type="submit" name="submit-summary" id="submit-summary" />
+                    </form>
+                </div>
         } else {
-            element = <div className="right-summary">
-                <p>{this.state.summary}</p>
-                <button onClick={this.handleOnClick}>Edit</button>
-            </div>
+            element =
+                <div className="summary">
+                    <div className="right-summary">
+                        <p>{this.state.summary}</p>
+                    </div>
+                </div>
         }
 
-
         return (
-            <div className="summary-container">
-                <div className="left-summary">
-                    <p>Summary</p>
+            <div onClick={this.handleOnClick} className="overlay">
+                <div className="summary-container">
+                    <div className="left-summary">
+                        <p>Summary</p>
+                    </div>
+                    {element}
                 </div>
-                {element}
             </div>
         )
     }

@@ -3,20 +3,21 @@ import { Component } from "react";
 import uniqid from "uniqid"
 import "../styles/Skills.scss"
 
-class Skills extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            input: false,
-            skills: [],
-            skill: {
-                text: "",
-                id: uniqid(),
-            }
+export default function Skills() {
+    const [state, setState] = React.useState({
+        input: false,
+        skills: [],
+        skill: {
+            text: "",
+            id: uniqid(),
         }
-    }
+    })
 
-    handleSubmit = (e) => {
+    let element;
+
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (this.state.skill.text.trim() === "") {
             console.log('please enter skill');
@@ -33,7 +34,7 @@ class Skills extends Component {
         }
     }
 
-    handleChange = (e) => {
+    const handleChange = (e) => {
         this.setState({
             skill: {
                 text: e.target.value,
@@ -42,13 +43,13 @@ class Skills extends Component {
         })
     }
 
-    handleAddSkill = (e) => {
+    const handleAddSkill = (e) => {
         this.setState(st => {
             return st.input = true;
         })
     }
 
-    handleDelete = (e, id) => {
+    const handleDelete = (e, id) => {
         let skillArr = this.state.skills;
         let filteredArr = skillArr.filter(item => {
             return item.id !== id;
@@ -59,43 +60,32 @@ class Skills extends Component {
         })
     }
 
-
-    render() {
-        const { skills } = this.state;
-        let element;
-        if (this.state.input) {
-            element =
-                <form onSubmit={this.handleSubmit} action="">
-                    <input onChange={this.handleChange} type="text" name="skill" id="skill" />
-                    <input type="submit" name="submit-skill" id="submit-skill" value={"Submit"} />
-                </form>
-        } else {
-            element = <button onClick={this.handleAddSkill}>Add Skill</button>
-        }
-        return (
-            <div className="skills-container">
-                <div className="skills-left">
-                    <p>Skills</p>
-                </div>
-                <div className="skills-right">
-                    <div className="skills">
-                        <ul >
-                            {skills.map(skill => {
-                                    return (
-                                        <li key={skill.id} >{skill.text}
-                                            <button onClick={(e) => this.handleDelete(e, skill.id)} >Delete</button>
-                                        </li>
-                                    )
-                                })
-                            }
-                            {element}
-                        </ul>
-                    </div>
-                </div>
-
+    if (state.input) {
+        element =
+            <form onSubmit={handleSubmit} action="">
+                <input onChange={handleChange} type="text" name="skill" id="skill" />
+                <input type="submit" name="submit-skill" id="submit-skill" value={"Submit"} />
+            </form>
+    } else {
+        element = <div className="skills-container">
+            <div className="skills-left">
+                <p>Skills</p>
             </div>
-        );
+            <div className="skills-right">
+                <div className="skills">
+                    <ul >
+                        {state.skills.map(skill => {
+                            return (
+                                <li key={skill.id} >{skill.text}
+                                    <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
+                                </li>
+                            )
+                        })
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
     }
+    return (<div className="overlay">{element}</div>)
 }
-
-export default Skills;
