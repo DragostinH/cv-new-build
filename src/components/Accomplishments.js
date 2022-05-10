@@ -9,11 +9,13 @@ class Accomplishments extends Component{
 
     render(){
         return(
-            <section className="accomplishments-container">
-                <div className="accomplishments-left">
-                    <p>Accomplishments</p>
-                </div>
-            </section>
+            <div className="overlay">
+                <section className="accomplishments-container">
+                    <div className="accomplishments-left">
+                        <span>Accomplishments</span>
+                    </div>
+                </section>
+            </div>
         )
     }
 }

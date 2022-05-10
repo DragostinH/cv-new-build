@@ -3,3 +3,26 @@
     grid-template-columns: 25% 1fr;
     border-bottom: 1px solid black;
 }
+
+.degree-info-container{
+    display: flex;
+    justify-content: space-between;
+}
+.degree-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.degree-name{
+    margin: 0;
+}
+
+.uni-name-location-container{
+    display: flex;
+    gap: 0.2rem;
+}
+
+.uni-name,
+.uni-location{
+    margin: 0;
+}

@@ -44,7 +44,7 @@ class Summary extends Component {
             element =
                 <div className="summary">
                     <div className="right-summary">
-                        <p>{this.state.summary}</p>
+                        <span>{this.state.summary}</span>
                     </div>
                 </div>
         }
@@ -53,7 +53,7 @@ class Summary extends Component {
             <div onClick={this.handleOnClick} className="overlay">
                 <div className="summary-container">
                     <div className="left-summary">
-                        <p>Summary</p>
+                        <span>Summary</span>
                     </div>
                     {element}
                 </div>

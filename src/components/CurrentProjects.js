@@ -68,7 +68,7 @@ export default function CurrentProjects() {
         element =
             <div className="current-projects">
                 <div className="left-projects">
-                    <p>Current Projects</p>
+                    <span>Current Projects</span>
                 </div>
                 <div className="right-projects">
                     <ul>

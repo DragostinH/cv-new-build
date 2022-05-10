@@ -1,22 +1,48 @@
-import React, { Component } from "react";
+import React from "react";
 import "../styles/EducationAndTraining.scss"
 
 
-class EducationAndTraining extends Component{
-    constructor(props){
-        super(props)
-        this.state={}
-    }
+export default function EducationAndTraining() {
 
-    render(){
-        return(
+    const [state, setState] = React.useState({
+        educations: [{}],
+        education: {
+            schoolName: "",
+            schoolLocation: "",
+            degree: "",
+            field: "",
+            gradDate: "",
+            stillEnrolled: false,
+        }
+    });
+
+
+
+    return (
+        <div className="overlay">
             <section className="education-training-container">
                 <div className="left-education-training">
-                    <p>Education & Training</p>
+                    <span>Education & Training</span>
+                </div>
+                <div className="right-education-training">
+                    <div className="degree-info-container">
+                        <div className="degree-info">
+                            <h4 className="degree-name">Bachelor Of Computer Science</h4>
+                            <div className="uni-name-location-container">
+                                <span className="uni-name">Glasgow Caledonian University</span>
+                                <span>|</span>
+                                <span className="uni-location">Glasgow</span>
+                            </div>
+                        </div>
+                        <div className="graduation-info-container">
+                            <span>01/09/2014</span>
+                        </div>
+                    </div>
+
+
                 </div>
             </section>
-        )
-    }
-}
+        </div>
+    )
 
-export default EducationAndTraining;
+}

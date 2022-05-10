@@ -69,7 +69,7 @@ export default function Skills() {
     } else {
         element = <div className="skills-container">
             <div className="skills-left">
-                <p>Skills</p>
+                <span>Skills</span>
             </div>
             <div className="skills-right">
                 <div className="skills">
