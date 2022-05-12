@@ -5,6 +5,7 @@ import "../styles/EducationAndTraining.scss"
 export default function EducationAndTraining() {
 
     const [state, setState] = React.useState({
+        input: false,
         educations: [{}],
         education: {
             schoolName: "",
@@ -38,8 +39,6 @@ export default function EducationAndTraining() {
                             <span>01/09/2014</span>
                         </div>
                     </div>
-
-
                 </div>
             </section>
         </div>

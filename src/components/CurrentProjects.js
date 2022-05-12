@@ -66,25 +66,26 @@ export default function CurrentProjects() {
         )
     } else {
         element =
-            <div className="current-projects">
-                <div className="left-projects">
-                    <span>Current Projects</span>
-                </div>
-                <div className="right-projects">
-                    <ul>
-                        <li>{state.projectOne}</li>
-                        <li>{state.projectTwo}</li>
-                        <li>{state.projectThree}</li>
-                    </ul>
-                    {element}
+            <div onClick={handleEditProjects} className="overlay">
+                <div className="current-projects">
+                    <div className="left-projects">
+                        <span>Current Projects</span>
+                    </div>
+                    <div className="right-projects">
+                        <ul>
+                            <li>{state.projectOne}</li>
+                            <li>{state.projectTwo}</li>
+                            <li>{state.projectThree}</li>
+                        </ul>
+                        {element}
+                    </div>
                 </div>
             </div>
+
     }
     return (
-        <div onClick={handleEditProjects} className="overlay">
-            {element}
-        </div>)
-
+        <section className="current-projects-section">{element}</section>
+    )
 
 
 }

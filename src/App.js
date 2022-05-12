@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './styles/App.scss';
 import ContactAndName from './components/ContactAndName';
 import CurrentProjects from './components/CurrentProjects';
@@ -8,9 +8,9 @@ import Skills from './components/Skills';
 import EducationAndTraining from './components/EducationAndTraining';
 import Accomplishments from './components/Accomplishments';
 
-class App extends Component {
+export default function App() {
 
-  render() {
+
     return (
       <div className="App">
         <ContactAndName />
@@ -22,8 +22,5 @@ class App extends Component {
         <Accomplishments />
       </div>
     );
-  }
-
 }
 
-export default App;

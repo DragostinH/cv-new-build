@@ -1,9 +1,9 @@
 import React from "react";
-import { Component } from "react";
-import uniqid from "uniqid"
-import "../styles/Skills.scss"
-
+import uniqid from "uniqid";
+import "../styles/Skills.scss";
+import { Slice } from "react-lodash";
 export default function Skills() {
+    let element;
     const [state, setState] = React.useState({
         input: false,
         skills: [],
@@ -13,18 +13,18 @@ export default function Skills() {
         }
     })
 
-    let element;
+
 
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (this.state.skill.text.trim() === "") {
+        if (state.skill.text.trim() === "") {
             console.log('please enter skill');
         } else {
-            this.setState({
-                input: false,
-                skills: this.state.skills.concat(this.state.skill),
+            setState({
+                ...state,
+                skills: state.skills.concat(state.skill),
                 skill: {
                     text: "",
                     id: uniqid()
@@ -34,58 +34,152 @@ export default function Skills() {
         }
     }
 
+    const handleOnClick = () => {
+        setState({
+            ...state,
+            input: true,
+        })
+    }
+
+    const handleCancel = () => {
+        setState({ ...state, input: false, });
+    }
+
     const handleChange = (e) => {
-        this.setState({
+        setState({
+            ...state,
             skill: {
                 text: e.target.value,
-                id: this.state.skill.id
+                id: state.skill.id
             }
         })
     }
 
     const handleAddSkill = (e) => {
-        this.setState(st => {
-            return st.input = true;
+        setState({
+            ...state,
+            input: true,
         })
     }
 
+
+    let { firstListArr, secondListArr } = splitSkill(state);
+    function splitSkill(state) {
+        let index;
+        let firstListArr = [];
+        let secondListArr = [];
+        if (state.skills.length === 1) {
+            console.log(state.skills.length);
+            firstListArr = state.skills;
+            return { firstListArr, secondListArr };
+        }
+        if (state.skills.length % 2 === 0) {
+            index = state.skills.length / 2;
+        } else {
+            index = (state.skills.length + 1) / 2;
+        }
+        firstListArr = state.skills.slice(0, index);
+        secondListArr = state.skills.slice(index, state.skills.length);
+        return { firstListArr, secondListArr };
+    }
+
+
     const handleDelete = (e, id) => {
-        let skillArr = this.state.skills;
+        let skillArr = state.skills;
         let filteredArr = skillArr.filter(item => {
             return item.id !== id;
         })
-        this.setState(st => {
-            return st.skills = filteredArr;
+        setState({
+            ...state,
+            skills: filteredArr,
 
         })
     }
 
     if (state.input) {
         element =
-            <form onSubmit={handleSubmit} action="">
-                <input onChange={handleChange} type="text" name="skill" id="skill" />
-                <input type="submit" name="submit-skill" id="submit-skill" value={"Submit"} />
-            </form>
-    } else {
-        element = <div className="skills-container">
-            <div className="skills-left">
-                <span>Skills</span>
-            </div>
-            <div className="skills-right">
-                <div className="skills">
-                    <ul >
-                        {state.skills.map(skill => {
-                            return (
-                                <li key={skill.id} >{skill.text}
-                                    <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
-                                </li>
-                            )
-                        })
-                        }
-                    </ul>
+            <div className="edit-page">
+                <aside>
+                    <header><p>CV Maker</p></header>
+                </aside>
+                <div className="entry-container-skills">
+                    <h2 className="edit-page-headline">Edit/Add your skills</h2>
+                    <div className="skills-form-container">
+                        <form onSubmit={handleSubmit} action="">
+                            <input onChange={handleChange} type="text" name="skill" id="skill" value={state.skill.text}/>
+                            <input type="submit" name="submit-skill" id="submit-skill" value={"Submit"} />
+                            <button onClick={handleCancel}>cancel</button>
+                        </form>
+                        <div className="skills-container">
+                            <div className="skills-left">
+                                <span>Skills</span>
+                            </div>
+                            <div className="skills-right">
+                                <div className="skills">
+                                    <ul >
+                                        {firstListArr.map(skill => {
+                                            return (
+                                                <li key={skill.id} >{skill.text}
+                                                    <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
+                                                </li>
+                                            )
+                                        })
+                                        }
+
+                                    </ul>
+                                    <ul >
+                                        {secondListArr.map(skill => {
+                                            return (
+                                                <li key={skill.id} >{skill.text}
+                                                    <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
+                                                </li>
+                                            )
+                                        })
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+    } else {
+        element =
+            <div onClick={handleOnClick} className="overlay">
+                <div className="skills-container">
+                    <div className="skills-left">
+                        <span>Skills</span>
+                    </div>
+                    <div className="skills-right">
+                        <div className="skills">
+                            <ul >
+                                {firstListArr.map(skill => {
+                                    return (
+                                        <li key={skill.id} >{skill.text}
+                                        </li>
+                                    )
+                                })
+                                }
+
+                            </ul>
+                            <ul >
+                                {secondListArr.map(skill => {
+                                    return (
+                                        <li key={skill.id} >{skill.text}
+                                        </li>
+                                    )
+                                })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     }
-    return (<div className="overlay">{element}</div>)
+    return (
+        <section className="skills-section">{element}</section>
+    )
 }
+
+

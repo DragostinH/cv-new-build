@@ -1,118 +1,131 @@
 import React, { Component } from "react";
 import "../styles/ContactAndName.scss"
 
-class ContactAndName extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            contactInfo: {
-                input: false,
-                firstName: "Drago",
-                lastName: "Hristov",
-                email: "dragostin.hristov@gmail.com",
-                tel: "+44(0)7565335040",
-                country: "Bulgaria",
-                city: "Sofia",
-                postCode: "1330"
-            },
-        }
-    }
+export default function ContactAndName() {
+    let contactInfo;
 
-    handleSubmit = (e) => {
+    const [state, setState] = React.useState({
+        input: false,
+        firstName: "Drago",
+        lastName: "Hristov",
+        email: "dragostin.hristov@gmail.com",
+        tel: "+44(0)7565335040",
+        country: "Bulgaria",
+        city: "Sofia",
+        postCode: "1330"
+    })
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        this.setState(st => {
-            return st.contactInfo.input = false;
+        setState({
+            ...state,
+            input: false,
         })
     }
 
-    handleChange = (e) => {
-        this.setState(st => {
-            return st.contactInfo[`${e.target.name}`] = e.target.value
+    const handleChange = (e) => {
+        setState({
+            ...state,
+            [`${e.target.name}`]: e.target.value,
         })
     }
 
-    handleOnClick = (e) => {
+    const handleBack = () => {
+        setState({
+            ...state,
+            input: false,
+        })
+    }
 
-        if (this.state.contactInfo.input) {
-            this.setState(st => {
-                return st.contactInfo.input = false;
+    const handleOnClick = (e) => {
+        if (state.input) {
+            setState({
+                ...state,
+                input: false,
             })
         } else {
-            this.setState(st => {
-                return st.contactInfo.input = true;
+            setState({
+                ...state,
+                input: true,
             })
         }
     }
 
 
-
-    render() {
-        const { input, firstName, lastName, email, tel, country, city, postCode } = this.state.contactInfo;
-        let contactInfo;
-        input ?
-            contactInfo =
-            <div className="edit-info-page">
-                <div className="name-logo">
-                    <div className="box">
-                        <span>{firstName.charAt(0)}</span>
-                        <div className="separator"></div>
-                        <span>{lastName.charAt(0)}</span>
+    if (state.input) {
+        contactInfo =
+            <div className="edit-page">
+                <aside>
+                    <header><p>CV Maker</p></header>
+                </aside>
+                <div className="entry-container">
+                    <div className="name-logo">
+                        <div className="box">
+                            <span>{state.firstName.charAt(0)}</span>
+                            <div className="separator"></div>
+                            <span>{state.lastName.charAt(0)}</span>
+                        </div>
                     </div>
+                    <form className="contactInfo-form" onSubmit={handleSubmit} action="#">
+                        <label htmlFor="firstName">
+                            First Name:
+                            <input onChange={handleChange} value={state.firstName} type="text" id="firstName" name="firstName" />
+                        </label>
+                        <label htmlFor="lastName">
+                            Last Name:
+                            <input onChange={handleChange} value={state.lastName} type="text" id="lastName" name="lastName" />
+                        </label>
+                        <label htmlFor="email">Email:
+                            <input onChange={handleChange} value={state.email} type="email" name="email" id="email" />
+                        </label>
+                        <label htmlFor="tel">Tel:
+                            <input onChange={handleChange} value={state.tel} type="tel" name="tel" id="tel" />
+                        </label>
+                        <label htmlFor="country">Country:
+                            <input onChange={handleChange} value={state.country} type="text" name="country" id="country" />
+                        </label>
+                        <label htmlFor="city">City:
+                            <input onChange={handleChange} value={state.city} type="text" name="city" id="city" />
+                        </label>
+                        <label htmlFor="postCode">Post code:
+                            <input onChange={handleChange} value={state.postCode} type="text" name="postCode" id="postCode" />
+                        </label>
+                        <input type="submit" name="submit" id="submit" value={"submit"} />
+                    </form>
                 </div>
-                <form className="contactInfo-form" onSubmit={this.handleSubmit} action="#">
-                    <label htmlFor="firstName">
-                        First Name:
-                        <input onChange={this.handleChange} value={firstName} type="text" id="firstName" name="firstName" />
-                    </label>
-                    <label htmlFor="lastName">
-                        Last Name:
-                        <input onChange={this.handleChange} value={lastName} type="text" id="lastName" name="lastName" />
-                    </label>
-                    <label htmlFor="email">Email:
-                        <input onChange={this.handleChange} value={email} type="email" name="email" id="email" />
-                    </label>
-                    <label htmlFor="tel">Tel:
-                        <input onChange={this.handleChange} value={tel} type="tel" name="tel" id="tel" />
-                    </label>
-                    <label htmlFor="country">Country:
-                        <input onChange={this.handleChange} value={country} type="text" name="country" id="country" />
-                    </label>
-                    <label htmlFor="city">City:
-                        <input onChange={this.handleChange} value={city} type="text" name="city" id="city" />
-                    </label>
-                    <label htmlFor="postCode">Post code:
-                        <input onChange={this.handleChange} value={postCode} type="text" name="postCode" id="postCode" />
-                    </label>
-                    <input type="submit" name="submit" id="submit" value={"submit"} />
-                </form>
+                <div className="navigation-btns-edit">
+                    <button onClick={handleBack} >Back</button>
+                    <button ></button>
+                </div>
             </div>
-             :
-            contactInfo =
-            <div onClick={this.handleOnClick} className="overlay">
+    } else {
+        contactInfo =
+            <div onClick={handleOnClick} className="overlay">
                 <div className="contact-info">
                     <div className="name-logo">
                         <div className="box">
-                            <span>{firstName.charAt(0)}</span>
+                            <span>{state.firstName.charAt(0)}</span>
                             <div className="separator"></div>
-                            <span>{lastName.charAt(0)}</span>
+                            <span>{state.lastName.charAt(0)}</span>
                         </div>
                     </div>
                     <div className="info-container">
-                        <div onClick={this.handleOnClick} className="submitted-info">
-                            <h1 onClick={this.handleOnClick}>{firstName + " " + lastName}</h1>
+                        <div onClick={handleOnClick} className="submitted-info">
+                            <h1 onClick={handleOnClick}>{state.firstName + " " + state.lastName}</h1>
                             <div className="info">
-                                <span>{email}</span>
-                                <span>{tel}</span>
-                                <span>{country + " " + postCode + " " + city}</span>
+                                <span>{state.email}</span>
+                                <span>{state.tel}</span>
+                                <span>{state.country + " " + state.postCode + " " + state.city}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        return (<div className="header">{contactInfo}</div>
-        )
     }
-}
 
-export default ContactAndName;
+
+    return (
+        <section className="contact-and-name-section">{contactInfo}</section>
+    )
+}

@@ -3,3 +3,18 @@
     grid-template-columns: 25% 1fr;
     border-bottom: 1px solid black;
 }
+
+.entry-container-skills{
+        // grid-template-columns: 1fr;
+}
+
+.skills-form-container{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+}
+
+.skills{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

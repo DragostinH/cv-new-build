@@ -5,7 +5,6 @@ import "../styles/Experience.scss"
 export default function Experience() {
     let experienceViewToggle;
     let addExperienceWindow;
-    let textOrList;
     let test;
 
     const [state, setState] = React.useState({
@@ -165,13 +164,13 @@ export default function Experience() {
 
     if (state.input) {
         experienceViewToggle =
-            <div className="edit-experience-page">
+            <div className="edit-page">
                 {addExperienceWindow}
                 <aside>
                     <header><p>CV Maker</p></header>
                 </aside>
-                <div className="experience-entry-container">
-                    <h2 className="edit-experience-headline">Edit/Add your experience</h2>
+                <div className="entry-container">
+                    <h2 className="edit-page-headline">Edit/Add your experience</h2>
                     {state.experienceList.map(exp => {
                         return (
                             <div key={uniqid()} className="saved-experience-entry">

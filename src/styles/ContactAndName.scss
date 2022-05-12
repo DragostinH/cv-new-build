@@ -8,23 +8,6 @@ $body-bg: #2e2e2e;
 
   }
 
-  .overlay{
-    border: thick double white;
-    width: 100%;
-    height: 100%;
-  }
-
-  .edit-info-page{
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    background-color: white;
-  }
 
 .info{
     display:flex;
@@ -68,15 +51,15 @@ $body-bg: #2e2e2e;
     background-color: black;
   }
 
-  .contactInfo-form {
-    display: grid;
-    gap: 0.5rem;
-    width: min-content;
-    // align-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  }
+  // .contactInfo-form {
+  //   display: grid;
+  //   gap: 0.5rem;
+  //   width: min-content;
+  //   // align-items: center;
+  //   grid-template-columns: repeat(3, 1fr);
+  //   grid-template-rows: repeat(3, 1fr);
+  //   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  // }
 
   #submit{
     grid-column: 2/4;
@@ -87,9 +70,3 @@ $body-bg: #2e2e2e;
     padding: 0.2rem;
   }
 
-.overlay:hover{
-  border: thick double rgb(91, 207, 67);
-  background-color: rgba($color: #77e999, $alpha: 0.3);
-  cursor: pointer;
-  z-index: 999;
-}
