@@ -1,13 +1,14 @@
 import React from "react";
+import { useState } from "react";
 import uniqid from "uniqid";
 import "../styles/Experience.scss"
 
 export default function Experience() {
     let experienceViewToggle;
     let addExperienceWindow;
-    let test;
+    let listOrTextSwitch;
 
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         input: false,
         addExp: false,
         textOrList: false,
@@ -15,8 +16,8 @@ export default function Experience() {
             {
                 jobTitle: "Change Manager",
                 employer: "Webhelp",
-                country: "Bulgaria",
-                city: "Glasgow",
+                jobCountry: "Bulgaria",
+                jobCity: "Glasgow",
                 startDate: "June 2021",
                 endDate: "Feb 2022",
                 responsibilities: [
@@ -32,8 +33,8 @@ export default function Experience() {
             {
                 jobTitle: "Change Manager",
                 employer: "Webhelp",
-                country: "Bulgaria",
-                city: "Glasgow",
+                jobCountry: "Bulgaria",
+                jobCity: "Glasgow",
                 startDate: "June 2021",
                 endDate: "Feb 2022",
                 responsibilities: [
@@ -47,17 +48,34 @@ export default function Experience() {
                 currentJob: false
             },
         ],
-        experience: {
-            jobTitle: "",
-            employer: "",
-            country: "",
-            city: "",
-            startDate: "",
-            endDate: "",
-            responsibilities: [],
-            currentJob: false
-        }
     })
+
+    const [newExperienceFormData, setFormData] = useState({
+        text: "",
+        jobTitle: "",
+        employer: "",
+        jobCountry: "",
+        jobCity: "",
+        startDate: "",
+        endDate: "",
+        responsibilities: [],
+        currentJob: false
+
+    })
+
+
+    // const Form = () => {
+    //     const [formData, setFormData] = useState({
+    //         jobTitle: "",
+    //         employer: "",
+    //         jobCountry: "",
+    //         jobCity: "",
+    //         startDate: "",
+    //         endDate: "",
+    //     })
+    //     const [jobTitle, setTitle] = useState("");
+
+    // }
 
     const handleBack = () => {
         setState({
@@ -79,6 +97,23 @@ export default function Experience() {
         })
     }
 
+    const handleOnChange = (e) => {
+        setFormData({
+            ...newExperienceFormData,
+            [e.target.id]: e.target.value,
+
+        })
+    }
+
+    const handleOnSave = (e) => {
+        let newExperience = newExperienceFormData;
+        setState({
+            ...state,
+            addExp: false,
+            experienceList: state.experienceList.concat(newExperience),
+        })
+    }
+
 
 
     // TODO: Add feature where you hide more than 3 rbilities and show them by clicking
@@ -90,6 +125,19 @@ export default function Experience() {
     //         })
     //     })
     // }
+
+    function toggleBetweenListOrText(state, listOrTextSwitch) {
+        state.textOrList ?
+            listOrTextSwitch =
+            <textarea name="responsb" id="responsb" cols="30" rows="10">
+
+            </textarea> :
+            listOrTextSwitch =
+            <label htmlFor="">
+                <input type="text" name="" id="" />
+            </label>;
+        return listOrTextSwitch;
+    }
 
 
     const showEditPage = () => {
@@ -104,7 +152,7 @@ export default function Experience() {
         console.log(e.target.value.split(/\r?\n/));
     }
 
-    const areaSelected = (e) =>{
+    const areaSelected = (e) => {
         alert(window.getSelection())
     }
 
@@ -115,49 +163,59 @@ export default function Experience() {
         })
     }
 
-    if (state.addExp) {
-        state.textOrList ? test =
-            <textarea onChange={textAreaOnChange} onClick={areaSelected} name="responsb" id="responsb" cols="30" rows="10">
+    // <div className="resp-form">
+    //     <p>Add responsibilities</p>
+    //     <label htmlFor="freeText">
+    //         Text
+    //         <input onClick={handleChecked} type="checkbox" name="textAreaRadio" id="freeText" />
+    //     </label>
+    //     <form action="">
+    //         {listOrTextSwitch}
+    //         <input type="submit" name="" id="" />
+    //     </form>
+    // </div >
 
-            </textarea> :
-            test =
-            <label htmlFor="">
-                <input type="text" name="" id="" />
-            </label>;
+    // {(e) => setState({...state, experiencebody: e.target.value})} 
+    if (state.addExp) {
+        listOrTextSwitch = toggleBetweenListOrText(state, listOrTextSwitch);
 
         addExperienceWindow = (
             <div className="add-experience-container">
                 <div className="add-experience-window">
                     <p className="add-experience">Add Experience</p>
-                    <form action="">
+                    <form onSubmit={handleOnSave} htmlFor="expForm" action="">
                         <label htmlFor="">
                             <p>Job Title</p>
-                            <input type="text" name="jobTitle" id="jobTitle" />
+                            <input required onChange={handleOnChange} type="text" name="expForm" id="jobTitle" />
                         </label>
                         <label htmlFor="">
                             <p>Employer</p>
-                            <input type="text" name="employer" id="employer" />
+                            <input onChange={handleOnChange} type="text" name="employer" id="employer" />
                         </label>
                         <label htmlFor="">
                             <p>Country</p>
-                            <input type="text" name="jobCountry" id="jobCountry" />
+                            <input onChange={handleOnChange} type="text" name="jobCountry" id="jobCountry" />
                         </label>
                         <label htmlFor="">
                             <p>City</p>
-                            <input type="text" name="jobCity" id="jobCity" />
+                            <input onChange={handleOnChange} type="text" name="jobCity" id="jobCity" />
                         </label>
+                        <label htmlFor="">
+                            <p>Start date</p>
+                            <input onChange={handleOnChange} type="date" name="jobStartDate" id="startDate" />
+                        </label>
+                        <label htmlFor="">
+                            <p>End date</p>
+                            <input onChange={handleOnChange} type="date" name="jobEndDate" id="endDate" />
+                        </label>
+
                     </form>
-                    <div className="resp-form">
-                        <p>Add responsibilities</p>
-                        <label htmlFor="freeText">
-                            Text
-                            <input onClick={handleChecked} type="checkbox" name="textAreaRadio" id="freeText" />
-                        </label>
-                        <form action="">
-                            {test}
-                        </form>
-                    </div >
-                    <button onClick={handleCancelAddingExperience}>Cancel</button>
+
+
+                    <div className="add-experience-btn-controls" htmlFor="">
+                        <button>cancel</button>
+                        <input type="submit" name="expForm" id="exp-submit-btn" />
+                    </div>
                 </div>
             </div>)
     }
@@ -179,7 +237,7 @@ export default function Experience() {
                                         <span>{exp.jobTitle}</span>
                                     </div>
                                     <div className="saved-experience-location-dates">
-                                        <span>{exp.city}</span>
+                                        <span>{exp.jobCity}</span>
                                         <span>|</span>
                                         <span>{exp.startDate}</span>
                                         <span>-</span>
@@ -226,7 +284,7 @@ export default function Experience() {
                                     </div>
                                     <span className="job-employer">{exp.employer}</span>
                                     <span>|</span>
-                                    <span className="job-city">{exp.city}</span>
+                                    <span className="job-city">{exp.jobCity}</span>
                                     <ul>
                                         {exp.responsibilities.map(re => {
                                             return <li key={uniqid()}>{re}</li>
@@ -250,4 +308,6 @@ export default function Experience() {
     )
 
 }
+
+
 

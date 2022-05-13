@@ -5,16 +5,45 @@
 }
 
 .entry-container-skills{
-        // grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
 }
 
 .skills-form-container{
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
+    gap: 3rem;
+}
+.add-skill-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+#submit-skill{
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+#skill-input{
+    padding: 0.5rem;
+    width: 40%;
 }
 
 .skills{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+.li-skill-entry{
+    display: grid;
+    grid-template-columns: max-content min-content;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.edit-page-back-btn{
+    font-size: 2rem;
+}
+

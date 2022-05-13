@@ -10,17 +10,23 @@ import Accomplishments from './components/Accomplishments';
 
 export default function App() {
 
+  // const [state, setState] = React.useState({
+  //   input: false,
+  // })
 
-    return (
-      <div className="App">
-        <ContactAndName />
-        <CurrentProjects />
-        <Summary />
-        <Skills />
-        <Experience />
-        <EducationAndTraining />
-        <Accomplishments />
-      </div>
-    );
+
+
+
+  return (
+    <div className="App">
+      <ContactAndName />
+      <CurrentProjects />
+      <Summary />
+      <Skills />
+      <Experience />
+      <EducationAndTraining />
+      <Accomplishments />
+    </div>
+  );
 }
 

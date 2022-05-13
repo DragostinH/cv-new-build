@@ -1,7 +1,6 @@
 import React from "react";
 import uniqid from "uniqid";
 import "../styles/Skills.scss";
-import { Slice } from "react-lodash";
 export default function Skills() {
     let element;
     const [state, setState] = React.useState({
@@ -15,8 +14,12 @@ export default function Skills() {
 
 
 
-
-
+    const handleBack = () => {
+        setState({
+            ...state,
+            input: false,
+        })
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
         if (state.skill.text.trim() === "") {
@@ -41,10 +44,6 @@ export default function Skills() {
         })
     }
 
-    const handleCancel = () => {
-        setState({ ...state, input: false, });
-    }
-
     const handleChange = (e) => {
         setState({
             ...state,
@@ -55,21 +54,12 @@ export default function Skills() {
         })
     }
 
-    const handleAddSkill = (e) => {
-        setState({
-            ...state,
-            input: true,
-        })
-    }
-
-
     let { firstListArr, secondListArr } = splitSkill(state);
     function splitSkill(state) {
         let index;
         let firstListArr = [];
         let secondListArr = [];
         if (state.skills.length === 1) {
-            console.log(state.skills.length);
             firstListArr = state.skills;
             return { firstListArr, secondListArr };
         }
@@ -83,7 +73,6 @@ export default function Skills() {
         return { firstListArr, secondListArr };
     }
 
-
     const handleDelete = (e, id) => {
         let skillArr = state.skills;
         let filteredArr = skillArr.filter(item => {
@@ -96,6 +85,7 @@ export default function Skills() {
         })
     }
 
+
     if (state.input) {
         element =
             <div className="edit-page">
@@ -103,12 +93,11 @@ export default function Skills() {
                     <header><p>CV Maker</p></header>
                 </aside>
                 <div className="entry-container-skills">
-                    <h2 className="edit-page-headline">Edit/Add your skills</h2>
+                    <h2 className="edit-page-headline">Add/remove skills</h2>
                     <div className="skills-form-container">
-                        <form onSubmit={handleSubmit} action="">
-                            <input onChange={handleChange} type="text" name="skill" id="skill" value={state.skill.text}/>
+                        <form className="add-skill-form" onSubmit={handleSubmit} action="">
+                            <input onChange={handleChange} type="text" name="skill" id="skill-input" value={state.skill.text} />
                             <input type="submit" name="submit-skill" id="submit-skill" value={"Submit"} />
-                            <button onClick={handleCancel}>cancel</button>
                         </form>
                         <div className="skills-container">
                             <div className="skills-left">
@@ -119,7 +108,7 @@ export default function Skills() {
                                     <ul >
                                         {firstListArr.map(skill => {
                                             return (
-                                                <li key={skill.id} >{skill.text}
+                                                <li className="li-skill-entry" key={skill.id} >{skill.text}
                                                     <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
                                                 </li>
                                             )
@@ -130,7 +119,7 @@ export default function Skills() {
                                     <ul >
                                         {secondListArr.map(skill => {
                                             return (
-                                                <li key={skill.id} >{skill.text}
+                                                <li className="li-skill-entry" key={skill.id} >{skill.text}
                                                     <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
                                                 </li>
                                             )
@@ -140,6 +129,9 @@ export default function Skills() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="navigation-btns-edit">
+                        <button className="edit-page-back-btn" onClick={handleBack}>Back</button>
                     </div>
                 </div>
             </div>
