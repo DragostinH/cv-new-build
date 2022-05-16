@@ -95,11 +95,16 @@
     transition: all 0.3s ease-in;
 }
 
+#responsb{
+    resize: none;
+}
+
 
 
 .add-experience-btn-controls > button,
-.add-experience-btn-controls > input{
+.add-experience-btn-controls > label input{
     font-size: large;
     text-transform: uppercase;
+    width: 100%;
     padding: 1rem 0 1rem 0rem;
 }

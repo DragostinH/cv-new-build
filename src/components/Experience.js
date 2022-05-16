@@ -6,7 +6,6 @@ import "../styles/Experience.scss"
 export default function Experience() {
     let experienceViewToggle;
     let addExperienceWindow;
-    // let listOrTextSwitch;
 
     const [state, setState] = useState({
         input: false,
@@ -50,17 +49,19 @@ export default function Experience() {
         ],
     })
 
-    const [newExperienceFormData, setFormData] = useState({
-        text: "",
+    const [newExpFormData, setNewExpFormData] = useState({
         jobTitle: "",
         employer: "",
         jobCountry: "",
         jobCity: "",
         startDate: "",
         endDate: "",
-        responsibilities: [],
         currentJob: false
 
+    });
+
+    const [newJobResp, setNewJobResp] = useState({
+        newRespsb: "",
     });
 
     const [styleData, setStyle] = useState({
@@ -68,19 +69,6 @@ export default function Experience() {
         jobResponsbLeft: "100%",
     })
 
-
-    // const Form = () => {
-    //     const [formData, setFormData] = useState({
-    //         jobTitle: "",
-    //         employer: "",
-    //         jobCountry: "",
-    //         jobCity: "",
-    //         startDate: "",
-    //         endDate: "",
-    //     })
-    //     const [jobTitle, setTitle] = useState("");
-
-    // }
 
     const handleBack = () => {
         setState({
@@ -90,11 +78,32 @@ export default function Experience() {
     }
 
     const handleAddingExperience = () => {
+
         setState({
             ...state,
             addExp: true,
-        })
+        });
+
+        setNewExpFormData({
+            ...newExpFormData,
+            jobTitle: "",
+            employer: "",
+            jobCountry: "",
+            jobCity: "",
+            startDate: "",
+            endDate: "",
+            currentJob: false
+        });
+
+        setStyle({
+            ...styleData,
+            jobInfoLeft: "0%",
+            jobResponsbLeft: "100%",
+        });
+
     }
+
+
     const handleCancelAddingExperience = () => {
         setState({
             ...state,
@@ -107,22 +116,47 @@ export default function Experience() {
             jobResponsbLeft: "100%",
         })
     }
+    const handleBackAddinghExperience = () => {
+        setStyle({
+            ...styleData,
+            jobInfoLeft: "0%",
+            jobResponsbLeft: "100%",
+        });
+    }
 
     const handleOnChange = (e) => {
-        setFormData({
-            ...newExperienceFormData,
+        setNewExpFormData({
+            ...newExpFormData,
             [e.target.id]: e.target.value,
 
         })
     }
 
     const handleOnSave = (e) => {
-        let newExperience = newExperienceFormData;
+        const currResp = newExpFormData.responsibilities;
+        if (!Array.isArray(currResp)) {
+            const splitByNewLine = currResp.split(/\r?\n/);
+
+            setState({
+                ...state,
+                addExp: true,
+            })
+
+            setNewExpFormData({
+                ...newExpFormData,
+                responsibilities: splitByNewLine,
+            });
+        };
+        e.preventDefault();
+        let newExperience = newExpFormData;
+        newExperience["responsibilities"] = [newJobResp.newRespsb];
         setState({
             ...state,
-            addExp: false,
             experienceList: state.experienceList.concat(newExperience),
+            addExp: false,
         })
+
+        console.log(state.experienceList);
     }
 
 
@@ -159,50 +193,53 @@ export default function Experience() {
     }
 
     const handleContinue = (e) => {
-        setStyle({
-            ...styleData,
-            jobInfoLeft: "-100%",
-            jobResponsbLeft: "0%",
-        })
-    }
+        if (newExpFormData.jobTitle !== "" &&
+            newExpFormData.employer !== "" &&
+            newExpFormData.jobCity !== "" &&
+            newExpFormData.startDate !== "" &&
+            newExpFormData.endDate !== "") {
+            setStyle({
+                ...styleData,
+                jobInfoLeft: "-100%",
+                jobResponsbLeft: "0%",
+            });
+        };
+    };
 
-    const testStyle = (e) => {
-        setStyle({
-            ...styleData,
-            [e.target.id]: 100,
-        })
-    }
+    const handleResponsb = (e) => {
+        setNewJobResp({
+            ...newJobResp,
+            newRespsb: e.target.value,
+        });
+    };
 
-    // const textAreaOnChange = (e) => {
+    const convertToBullets = (e) => {
+        const currResp = newExpFormData.responsibilities;
+        if (!Array.isArray(currResp)) {
+            const splitByNewLine = currResp.split(/\r?\n/);
 
-    //     console.log(e.target.value.split(/\r?\n/));
-    // }
+            setState({
+                ...state,
+                addExp: true,
+            })
 
-    // const areaSelected = (e) => {
-    //     alert(window.getSelection())
-    // }
+            setNewExpFormData({
+                ...newExpFormData,
+                responsibilities: splitByNewLine,
+            });
+        };
+    };
 
-    // const handleChecked = (e) => {
-    //     setState({
-    //         ...state,
-    //         textOrList: e.target.checked,
-    //     })
-    // }
+    const convertToText = (e) => {
+        let formResp = newExpFormData.responsibilities
+        if (Array.isArray(formResp)) {
+            setNewExpFormData({
+                ...newExpFormData,
+                responsibilities: formResp.join("\n"),
+            });
+        };
+    };
 
-    // <div className="resp-form">
-    //     <p>Add responsibilities</p>
-    //     <label htmlFor="freeText">
-    //         Text
-    //         <input onClick={handleChecked} type="checkbox" name="textAreaRadio" id="freeText" />
-    //     </label>
-    //     <form action="">
-    //         {listOrTextSwitch}
-    //         <input type="submit" name="" id="" />
-    //     </form>
-    // </div >
-
-    // {(e) => setState({...state, experiencebody: e.target.value})} 
-    /* <input type="submit" name="expForm" id="exp-submit-btn" /> */
 
     if (state.addExp) {
         // listOrTextSwitch = toggleBetweenListOrText(state, listOrTextSwitch);
@@ -212,7 +249,7 @@ export default function Experience() {
                 <div className="add-experience-window">
                     <div style={{ left: styleData.jobInfoLeft }} id="jobInfoLeft" className="slide add-job-info">
                         <p className="add-experience">Add Experience</p>
-                        <form onSubmit={handleOnSave} htmlFor="expForm" action="">
+                        <form onSubmit={(e) => e.preventDefault()} htmlFor="expForm" action="">
                             <label htmlFor="">
                                 <p>Job Title</p>
                                 <input required onChange={handleOnChange} type="text" name="expForm" id="jobTitle" />
@@ -237,18 +274,41 @@ export default function Experience() {
                                 <p>End date</p>
                                 <input onChange={handleOnChange} type="date" name="jobEndDate" id="endDate" />
                             </label>
+                            <div className="add-experience-btn-controls">
+                                <button onClick={handleCancelAddingExperience}>cancel</button>
+                                <label htmlFor="expForm">
+                                    <input type="submit" onClick={handleContinue} value={"continue"} />
+                                </label>
+                            </div>
                         </form>
                     </div>
                     <div style={{ left: styleData.jobResponsbLeft }} id="jobResponsbLeft" className="slide add-job-responsibilities">
-                        <textarea name="responsb" id="responsb" cols="30" rows="10">
-                        </textarea>
+                        <p>Add job description/responsibilities</p>
+                        <form onSubmit={handleOnSave} action="">
+                            <div className="job-resp-textarea-container">
+                                <div className="textarea-editing-controls">
+                                    <button onClick={convertToBullets}>Bullet points</button>
+                                    <button onClick={convertToText}>Text</button>
+                                </div>
+                                <textarea onChange={handleResponsb} value={newJobResp.newRespsb} name="responsb" id="responsb" cols="50" rows="30">
+                                </textarea>
+                            </div>
+                            <div className="add-experience-btn-controls">
+                                <label htmlFor="expForm">
+                                    <input onClick={handleBackAddinghExperience} type="button" name="expForm" id="" value={"back"} />
+                                </label>
+                                <label htmlFor="expForm">
+                                    <input type="submit" value={"submit"} />
+                                </label>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div className="add-experience-btn-controls" htmlFor="">
+                {/* <div className="add-experience-btn-controls" htmlFor="">
                     <button onClick={handleCancelAddingExperience}>cancel</button>
                     <button onClick={handleContinue}>continue</button>
-                </div>
-            </div>)
+                </div> */}
+            </div >)
     }
 
     if (state.input) {
