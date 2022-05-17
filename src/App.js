@@ -10,11 +10,6 @@ import Accomplishments from './components/Accomplishments';
 
 export default function App() {
 
-  // const [state, setState] = React.useState({
-  //   input: false,
-  // })
-
-
 
 
   return (
