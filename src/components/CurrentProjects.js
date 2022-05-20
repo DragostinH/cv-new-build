@@ -1,68 +1,81 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "../styles/CurrentProjects.scss"
+import EditProjects from "./EditProjects";
 
 export default function CurrentProjects() {
-    const [state, setState] = React.useState({
-        input: false,
+    let element;
+    const [projectsState, setProjectsState] = useState({
         projectOne: "https://github.com/DragostinH?tab=stars",
         projectTwo: "",
         projectThree: "",
+    });
+
+    const [inputState, setInputState] = useState({
+        input: false,
     })
-    let element;
-    let arr = [state.projectOne, state.projectTwo, state.projectThree]
+
+    const [editState, setEditState] = useState({
+        projectOne: "",
+        projectTwo: "",
+        projectThree: "",
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (state.projectOne.trim() !== "") {
-            setState({
-                ...state,
-                input: false,
-                projectOne: state.projectOne,
-                projectTwo: state.projectTwo,
-                projectThree: state.projectThree,
-            })
+        const editedProjects = editState;
 
-        } else {
-            setState({
-                ...state,
-                input: false,
-            })
-        }
-    }
+        setProjectsState({
+            ...projectsState,
+            ...editedProjects,
+        });
+        setInputState({
+            ...inputState,
+            input: false,
+        });
+    };
 
     const handleOnChange = (e) => {
-        setState({
-            ...state,
-            [`${e.target.name}`]: e.target.value,
+        setEditState({
+            ...editState,
+            [e.target.name]: e.target.value,
         });
-    }
+    };
 
     const handleEditProjects = () => {
-        setState({
-            ...state,
+        const currProjects = projectsState;
+
+        setInputState({
+            ...inputState,
             input: true,
-        })
-    }
+        });
+
+        setEditState({
+            ...editState,
+            ...currProjects,
+        });
+    };
+
+    const handleBack = () => {
+        setProjectsState({
+            ...projectsState,
+        });
+        setInputState({
+            ...inputState,
+            input: false,
+        });
+    };
 
 
 
-    if (state.input) {
+    console.log([projectsState])
+    if (inputState.input) {
         element = (
-            <div className="edit-projects-page">
-                <form className="project-form" onSubmit={handleSubmit} action="">
-                    <label htmlFor="projectOne"> <p>Project Link One</p>
-                        <input onChange={handleOnChange} value={state.projectOne}
-                            placeholder={state.projectOne} className="projects projectOne" type="text" name="projectOne" id="projectOne" />
-                    </label>
-                    <label htmlFor="projectTwo"> <p>Project Link Two</p>
-                        <input onChange={handleOnChange} value={state.projectTwo} className="projects projectTwo" type="text" name="projectTwo" id="projectTwo" />
-                    </label>
-                    <label htmlFor="projectThree"> <p>Project Link Three</p>
-                        <input onChange={handleOnChange} value={state.projectThree} className="projects projectThree" type="text" name="projectThree" id="projectThree" />
-                    </label>
-                    <input type="submit" name="submitProjects" id="submitProjects" value={"Submit"} />
-                </form>
-            </div >
+            <EditProjects
+                handleSubmit={handleSubmit}
+                handleOnChange={handleOnChange}
+                editState={editState}
+                handleBack={handleBack}
+            />
         )
     } else {
         element =
@@ -73,9 +86,7 @@ export default function CurrentProjects() {
                     </div>
                     <div className="right-projects">
                         <ul>
-                            <li>{state.projectOne}</li>
-                            <li>{state.projectTwo}</li>
-                            <li>{state.projectThree}</li>
+                            
                         </ul>
                         {element}
                     </div>

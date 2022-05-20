@@ -13,7 +13,7 @@ export default function App() {
 
 
   return (
-    <div className="App">
+    <section className="App">
       <ContactAndName />
       <CurrentProjects />
       <Summary />
@@ -21,7 +21,7 @@ export default function App() {
       <Experience />
       <EducationAndTraining />
       <Accomplishments />
-    </div>
+    </section>
   );
 }
 

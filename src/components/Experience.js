@@ -13,9 +13,8 @@ export default function Experience() {
     const [state, setState] = useState({
         input: false,
         addExp: false,
-        textOrList: false,
         experienceList: [],
-    })
+    });
 
     const [newExpFormData, setNewExpFormData] = useState({
         jobTitle: "",
@@ -28,14 +27,19 @@ export default function Experience() {
         id: uniqid(),
     });
 
-    const [newJobResp, setNewJobResp] = useState({
-        newRespsb: "",
+    const [jobResponsibilities, setJobResponsibilities] = useState({
+        responsibilities: "",
     });
 
     const [styleData, setStyle] = useState({
         jobInfoLeft: "0%",
         jobResponsbLeft: "100%",
     });
+
+    const [editState, setEditState] = useState({
+        editExp: false,
+        editExperienceList: [],
+    })
 
     const [editExpEntry, setEditExpEntry] = useState({
         editExp: false,
@@ -47,18 +51,72 @@ export default function Experience() {
         endDate: "",
         currentJob: false,
         id: ""
-    })
+    });
 
-    const [editRespb, setEditRespb] = useState({
+    const [editResponsibilities, setEditResponsibilities] = useState({
         responsibilities: "",
     })
+
+    // TODO: Add feature where you hide more than 3 rbilities and show them by clicking
+    // ...see more btn.
+    // const seeMoreToggle = () => {
+    //     state.experienceList.forEach(exp => {
+    //         exp.responsibilities.forEach(resp => {
+    //             console.log(resp);
+    //         })
+    //     })
+    // }
+
+    // function toggleBetweenListOrText(state, listOrTextSwitch) {
+    //     state.textOrList ?
+    //         listOrTextSwitch =
+    //         <textarea name="responsb" id="responsb" cols="30" rows="10">
+
+    //         </textarea> :
+    //         listOrTextSwitch =
+    //         <label htmlFor="">
+    //             <input type="text" name="" id="" />
+    //         </label>;
+    //     return listOrTextSwitch;
+    // }
 
     const handleBack = () => {
         setState({
             ...state,
             input: false,
         });
-    }
+    };
+
+    const handleOnChange = (e) => {
+        setNewExpFormData({
+            ...newExpFormData,
+            [e.target.id]: e.target.value,
+            id: newExpFormData.id
+        });
+    };
+
+    const handleOnSave = (e) => {
+        e.preventDefault();
+        let newExperience = newExpFormData;
+        newExperience["responsibilities"] = jobResponsibilities.responsibilities;
+        setState({
+            ...state,
+            experienceList: state.experienceList.concat(newExperience),
+            addExp: false,
+        });
+
+        setEditState({
+            ...editState,
+            editExperienceList: editState.editExperienceList.concat(newExperience),
+        });
+    };
+
+    const handleResponsb = (e) => {
+        setJobResponsibilities({
+            ...jobResponsibilities,
+            responsibilities: e.target.value,
+        });
+    };
 
     const handleAddingExperience = () => {
 
@@ -85,7 +143,11 @@ export default function Experience() {
             jobResponsbLeft: "100%",
         });
 
-    }
+        setJobResponsibilities({
+            ...jobResponsibilities,
+            responsibilities: "",
+        })
+    };
 
     const handleCancelAddingExp = () => {
         setState({
@@ -100,46 +162,27 @@ export default function Experience() {
         })
     };
 
-    const handleCancelEditExp = () => {
-        setEditExpEntry({
-            ...editExpEntry,
-            editExp: false,
-        })
-    }
-    const handleBackAddingExp = () => {
-        setStyle({
-            ...styleData,
-            jobInfoLeft: "0%",
-            jobResponsbLeft: "100%",
-        });
-    }
-
-    const handleOnChange = (e) => {
-        setNewExpFormData({
-            ...newExpFormData,
-            [e.target.id]: e.target.value,
-            id: newExpFormData.id
-        });
-    }
-
     const handleEditOnChange = (e) => {
         setEditExpEntry({
             ...editExpEntry,
-            [e.target.name]: [e.target.value]
+            [e.target.name]: e.target.value,
         });
 
-    }
-    const handleEditOnChangeResponsb = (e) => {
-        setEditRespb({
-            ...editRespb,
+    };
+
+    const handleEditOnChangeResponsibilities = (e) => {
+        setEditResponsibilities({
+            ...editResponsibilities,
             responsibilities: e.target.value,
-        });
+        })
     }
+
     const handleEdit = (e, id) => {
         let expToEdit;
         state.experienceList.forEach(item => {
             if (item.id === id) {
                 expToEdit = item;
+                return;
             };
         });
 
@@ -153,68 +196,44 @@ export default function Experience() {
             startDate: expToEdit.startDate,
             endDate: expToEdit.endDate,
             currentJob: false,
+            responsibilities: expToEdit.responsibilities,
             id: expToEdit.id,
         });
+    };
 
-        setEditRespb({
-            ...editRespb,
-            responsibilities: expToEdit.responsibilities,
+    const handleSubmitEdit = (e, expElement) => {
+        let tempArr = state.experienceList;
+        state.experienceList.forEach(expEntry => {
+            if (expEntry.id === expElement.id) {
+                let indx = tempArr.indexOf(expEntry);
+                tempArr[indx] = editExpEntry;
+                return;
+            };
         });
-    }
+
+        setState({
+            ...state,
+            experienceList: tempArr,
+        });
+
+        setEditExpEntry({
+            ...editExpEntry,
+            editExp: false,
+        });
+    };
+
+    const handleCancelEditExp = () => {
+        setEditExpEntry({
+            ...editExpEntry,
+            editExp: false,
+        });
+    };
 
     const handleRemoveExp = (e, id) => {
 
-    }
-
-    const handleOnSave = (e) => {
-        e.preventDefault();
-        const currResp = newJobResp.newRespsb;
-        if (!Array.isArray(currResp)) {
-            const splitByNewLine = currResp.split(/\r?\n/);
-
-            setState({
-                ...state,
-                addExp: true,
-            })
-
-            setNewExpFormData({
-                ...newExpFormData,
-                responsibilities: splitByNewLine,
-            });
-        };
-        let newExperience = newExpFormData;
-        newExperience["responsibilities"] = [newJobResp.newRespsb];
-        setState({
-            ...state,
-            experienceList: state.experienceList.concat(newExperience),
-            addExp: false,
-        })
-    }
+    };
 
 
-
-    // TODO: Add feature where you hide more than 3 rbilities and show them by clicking
-    // ...see more btn.
-    // const seeMoreToggle = () => {
-    //     state.experienceList.forEach(exp => {
-    //         exp.responsibilities.forEach(resp => {
-    //             console.log(resp);
-    //         })
-    //     })
-    // }
-
-    // function toggleBetweenListOrText(state, listOrTextSwitch) {
-    //     state.textOrList ?
-    //         listOrTextSwitch =
-    //         <textarea name="responsb" id="responsb" cols="30" rows="10">
-
-    //         </textarea> :
-    //         listOrTextSwitch =
-    //         <label htmlFor="">
-    //             <input type="text" name="" id="" />
-    //         </label>;
-    //     return listOrTextSwitch;
-    // }
 
 
     const showEditPage = () => {
@@ -238,12 +257,7 @@ export default function Experience() {
         };
     };
 
-    const handleResponsb = (e) => {
-        setNewJobResp({
-            ...newJobResp,
-            newRespsb: e.target.value,
-        });
-    };
+
 
     const convertToBullets = (e) => {
         const currResp = newExpFormData.responsibilities;
@@ -283,7 +297,6 @@ export default function Experience() {
         addExpWindow =
             <AddExperience
                 handleOnChange={handleOnChange}
-                handleBackAddingExp={handleBackAddingExp}
                 handleCancelAddingExp={handleCancelAddingExp}
                 handleContinue={handleContinue}
                 handleOnSave={handleOnSave}
@@ -292,7 +305,7 @@ export default function Experience() {
                 jobResponsbLeft={styleData.jobResponsbLeft}
                 convertToBullets={convertToBullets}
                 convertToText={convertToText}
-                newRespsb={newJobResp.newRespsb}
+                newRespsb={jobResponsibilities.responsibilities}
             />
     };
 
@@ -301,10 +314,10 @@ export default function Experience() {
             <EditExperience
                 handleEdit={handleEdit}
                 editExpEntry={editExpEntry}
-                editRespb={editRespb}
+                handleEditOnChangeResponsibilities={handleEditOnChangeResponsibilities}
                 handleEditOnChange={handleEditOnChange}
-                handleEditOnChangeResponsb={handleEditOnChangeResponsb}
                 handleCancelEditExp={handleCancelEditExp}
+                handleSubmitEdit={handleSubmitEdit}
             />
     }
 
@@ -334,11 +347,13 @@ export default function Experience() {
                                 </div>
                                 <div className="job-responsibilities">
                                     <ul>
-                                        {exp.responsibilities.map(resp => {
+                                        {/* {exp.responsibilities.map(resp => {
                                             return (
                                                 <li key={uniqid()}>{resp}</li>
                                             )
-                                        })}
+                                        })} */}
+
+                                        <li key={uniqid()}>{exp.responsibilities}</li>
                                         <button>...see more</button>
                                     </ul>
                                 </div>
@@ -376,9 +391,11 @@ export default function Experience() {
                                     <span>|</span>
                                     <span className="job-city">{exp.jobCity}</span>
                                     <ul>
-                                        {exp.responsibilities.map(re => {
+                                        {/* {exp.responsibilities.map(re => {
                                             return <li key={uniqid()}>{re}</li>
-                                        })}
+                                        })} */}
+
+                                        <li>{exp.responsibilities}</li>
                                     </ul>
                                 </div>
                             )

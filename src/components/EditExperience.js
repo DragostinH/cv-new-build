@@ -12,39 +12,35 @@ export default function EditExperience(props) {
             ...slidePositions,
             left: "-100%",
             right: "0%"
-        })
-    }
+        });
+    };
+
     const handleSlideMovementLeft = (e) => {
         setSlidePositions({
             ...slidePositions,
             left: "0%",
             right: "100%",
-        })
-    }
+        });
+    };
 
-    console.log(props.editExpEntry.id);
     const {
         handleEditOnChange,
         editExpEntry,
+        // editResponsibilities,
         editRespb,
         handleEditOnChangeResponsb,
-        handleBackAddinghExp,
+        handleEditOnChangeResponsibilities,
         handleCancelEditExp,
-        handleContinue,
-        handleOnSave,
-        handleResponsb,
-        jobInfoLeft,
-        jobResponsbLeft,
         convertToBullets,
         convertToText,
-        newRespsb
+        handleSubmitEdit,
     } = props;
 
     return (
         <div className="edit-experience-container">
             <div className="add-experience-window">
                 <div style={{ left: slidePositions.left }} id="jobInfoLeft" className="slide add-job-info">
-                    <p className="add-experience">Add Experience</p>
+                    <p className="add-experience">Edit Experience</p>
                     <form onSubmit={(e) => e.preventDefault()} htmlFor="expForm" action="">
                         <label htmlFor="">
                             <p>Job Title</p>
@@ -80,14 +76,14 @@ export default function EditExperience(props) {
                     </form>
                 </div>
                 <div style={{ left: slidePositions.right }} id="jobResponsbLeft" className="slide add-job-responsibilities">
-                    <p>Add job description/responsibilities</p>
+                    <p>Edit job description/responsibilities</p>
                     <form onSubmit={(e) => e.preventDefault()} action="">
                         <div className="job-resp-textarea-container">
                             <div className="textarea-editing-controls">
                                 <button onClick={convertToBullets}>Bullet points</button>
                                 <button onClick={convertToText}>Text</button>
                             </div>
-                            <textarea onChange={handleEditOnChangeResponsb} value={editRespb.responsibilities} name="responsb" id="responsb" cols="50" rows="30">
+                            <textarea onChange={handleEditOnChange} value={editExpEntry.responsibilities} id="responsb" name="responsibilities" cols="50" rows="30">
                             </textarea>
                         </div>
                         <div className="add-experience-btn-controls">
@@ -95,7 +91,7 @@ export default function EditExperience(props) {
                                 <input onClick={handleSlideMovementLeft} type="button" name="expForm" id="" value={"back"} />
                             </label>
                             <label htmlFor="expForm">
-                                <input type="submit" value={"submit"} />
+                                <input onClick={(e) => handleSubmitEdit(e, editExpEntry)} type="submit" value={"Save"} />
                             </label>
                         </div>
                     </form>

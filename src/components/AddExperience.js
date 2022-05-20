@@ -1,13 +1,34 @@
 import React from "react";
+import { useState } from "react";
 
 export default function AddExperience(props) {
+    const [slidePositions, setSlidePositions] = useState({
+        left: "0%",
+        right: "100%",
+    });
 
-    const { handleOnChange, handleBackAddinghExp, handleCancelAddingExp, handleContinue, handleOnSave, handleResponsb, jobInfoLeft, jobResponsbLeft, convertToBullets, convertToText, newRespsb } = props;
+    const handleSlideMovementRight = (e) => {
+        setSlidePositions({
+            ...slidePositions,
+            left: "-100%",
+            right: "0%"
+        });
+    };
+
+    const handleSlideMovementLeft = (e) => {
+        setSlidePositions({
+            ...slidePositions,
+            left: "0%",
+            right: "100%",
+        });
+    };
+
+    const { handleOnChange, handleCancelAddingExp, handleOnSave, handleResponsb, convertToBullets, convertToText, newRespsb } = props;
 
     return (
         <div className="add-experience-container">
             <div className="add-experience-window">
-                <div style={{ left: jobInfoLeft }} id="jobInfoLeft" className="slide add-job-info">
+                <div style={{ left: slidePositions.left }} id="jobInfoLeft" className="slide add-job-info">
                     <p className="add-experience">Add Experience</p>
                     <form onSubmit={(e) => e.preventDefault()} htmlFor="expForm" action="">
                         <label htmlFor="">
@@ -37,12 +58,12 @@ export default function AddExperience(props) {
                         <div className="add-experience-btn-controls">
                             <button onClick={handleCancelAddingExp}>cancel</button>
                             <label htmlFor="expForm">
-                                <input type="submit" onClick={handleContinue} value={"continue"} />
+                                <input type="submit" onClick={handleSlideMovementRight} value={"continue"} />
                             </label>
                         </div>
                     </form>
                 </div>
-                <div style={{ left: jobResponsbLeft }} id="jobResponsbLeft" className="slide add-job-responsibilities">
+                <div style={{ left: slidePositions.right }} id="jobResponsbLeft" className="slide add-job-responsibilities">
                     <p>Add job description/responsibilities</p>
                     <form onSubmit={handleOnSave} action="">
                         <div className="job-resp-textarea-container">
@@ -55,7 +76,7 @@ export default function AddExperience(props) {
                         </div>
                         <div className="add-experience-btn-controls">
                             <label htmlFor="expForm">
-                                <input onClick={handleBackAddinghExp} type="button" name="expForm" id="" value={"back"} />
+                                <input onClick={handleSlideMovementLeft} type="button" name="expForm" id="" value={"back"} />
                             </label>
                             <label htmlFor="expForm">
                                 <input type="submit" value={"submit"} />

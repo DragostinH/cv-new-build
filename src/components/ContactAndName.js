@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/ContactAndName.scss"
+import EditContactAndName from "./EditContactAndName";
 
 export default function ContactAndName() {
     let contactInfo;
 
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         input: false,
         firstName: "Drago",
         lastName: "Hristov",
@@ -13,95 +14,74 @@ export default function ContactAndName() {
         country: "Bulgaria",
         city: "Sofia",
         postCode: "1330"
-    })
+    });
 
+    const [editState, setEditState] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        tel: "",
+        country: "",
+        city: "",
+        postCode: "",
+    });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setState({
-            ...state,
-            input: false,
-        })
-    }
-
-    const handleChange = (e) => {
-        setState({
-            ...state,
-            [`${e.target.name}`]: e.target.value,
-        })
-    }
 
     const handleBack = () => {
         setState({
             ...state,
             input: false,
+        });
+    }
+
+    const handleEdit = (e) => {
+        setState({
+            ...state,
+            input: true,
+        });
+
+        setEditState({
+            ...editState,
+            firstName: state.firstName,
+            lastName: state.lastName,
+            email: state.email,
+            tel: state.tel,
+            country: state.country,
+            city: state.city,
+            postCode: state.postCode,
+        })
+
+    };
+
+    const handleEditOnChange = (e) => {
+        setEditState({
+            ...editState,
+            [e.target.name]: e.target.value,
         })
     }
 
-    const handleOnClick = (e) => {
-        if (state.input) {
-            setState({
-                ...state,
-                input: false,
-            })
-        } else {
-            setState({
-                ...state,
-                input: true,
-            })
-        }
+    const handleEditSubmit = (e) => {
+        const editedInfo = editState;
+
+        setState({
+            ...state,
+            ...editedInfo,
+            input: false,
+        });
     }
 
 
     if (state.input) {
         contactInfo =
-            <div className="edit-page">
-                <aside>
-                    <header><p>CV Maker</p></header>
-                </aside>
-                <div className="entry-container">
-                    <div className="name-logo">
-                        <div className="box">
-                            <span>{state.firstName.charAt(0)}</span>
-                            <div className="separator"></div>
-                            <span>{state.lastName.charAt(0)}</span>
-                        </div>
-                    </div>
-                    <form className="contactInfo-form" onSubmit={handleSubmit} action="#">
-                        <label htmlFor="firstName">
-                            First Name:
-                            <input onChange={handleChange} value={state.firstName} type="text" id="firstName" name="firstName" />
-                        </label>
-                        <label htmlFor="lastName">
-                            Last Name:
-                            <input onChange={handleChange} value={state.lastName} type="text" id="lastName" name="lastName" />
-                        </label>
-                        <label htmlFor="email">Email:
-                            <input onChange={handleChange} value={state.email} type="email" name="email" id="email" />
-                        </label>
-                        <label htmlFor="tel">Tel:
-                            <input onChange={handleChange} value={state.tel} type="tel" name="tel" id="tel" />
-                        </label>
-                        <label htmlFor="country">Country:
-                            <input onChange={handleChange} value={state.country} type="text" name="country" id="country" />
-                        </label>
-                        <label htmlFor="city">City:
-                            <input onChange={handleChange} value={state.city} type="text" name="city" id="city" />
-                        </label>
-                        <label htmlFor="postCode">Post code:
-                            <input onChange={handleChange} value={state.postCode} type="text" name="postCode" id="postCode" />
-                        </label>
-                        <input type="submit" name="submit" id="submit" value={"submit"} />
-                    </form>
-                </div>
-                <div className="navigation-btns-edit">
-                    <button onClick={handleBack} >Back</button>
-                    <button ></button>
-                </div>
-            </div>
+            <EditContactAndName
+                editState={editState}
+                handleEditOnChange={handleEditOnChange}
+                handleBack={handleBack}
+                handleEditSubmit={handleEditSubmit}
+            />
     } else {
         contactInfo =
-            <div onClick={handleOnClick} className="overlay">
+            <div onClick={handleEdit} className="overlay">
                 <div className="contact-info">
                     <div className="name-logo">
                         <div className="box">
@@ -111,8 +91,8 @@ export default function ContactAndName() {
                         </div>
                     </div>
                     <div className="info-container">
-                        <div onClick={handleOnClick} className="submitted-info">
-                            <h1 onClick={handleOnClick}>{state.firstName + " " + state.lastName}</h1>
+                        <div onClick={handleEdit} className="submitted-info">
+                            <h1 className="person-name" onClick={handleEdit}>{state.firstName + " " + state.lastName}</h1>
                             <div className="info">
                                 <span>{state.email}</span>
                                 <span>{state.tel}</span>
