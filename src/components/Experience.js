@@ -243,17 +243,13 @@ export default function Experience() {
         })
     }
 
-    const handleContinue = (e) => {
+    const handleAddExpFormValidation = (e) => {
         if (newExpFormData.jobTitle !== "" &&
             newExpFormData.employer !== "" &&
             newExpFormData.jobCity !== "" &&
             newExpFormData.startDate !== "" &&
             newExpFormData.endDate !== "") {
-            setStyle({
-                ...styleData,
-                jobInfoLeft: "-100%",
-                jobResponsbLeft: "0%",
-            });
+            return true;
         };
     };
 
@@ -298,9 +294,10 @@ export default function Experience() {
             <AddExperience
                 handleOnChange={handleOnChange}
                 handleCancelAddingExp={handleCancelAddingExp}
-                handleContinue={handleContinue}
+                handleContinue={handleAddExpFormValidation}
                 handleOnSave={handleOnSave}
                 handleResponsb={handleResponsb}
+                newExpFormData={newExpFormData}
                 jobInfoLeft={styleData.jobInfoLeft}
                 jobResponsbLeft={styleData.jobResponsbLeft}
                 convertToBullets={convertToBullets}
@@ -347,12 +344,6 @@ export default function Experience() {
                                 </div>
                                 <div className="job-responsibilities">
                                     <ul>
-                                        {/* {exp.responsibilities.map(resp => {
-                                            return (
-                                                <li key={uniqid()}>{resp}</li>
-                                            )
-                                        })} */}
-
                                         <li key={uniqid()}>{exp.responsibilities}</li>
                                         <button>...see more</button>
                                     </ul>
@@ -364,10 +355,10 @@ export default function Experience() {
                             </div>
                         )
                     })}
-                </div>
-                <div className="navigation-btns-edit">
-                    <button onClick={handleBack}>Back</button>
-                    <button onClick={handleAddingExperience}>Add more experience</button>
+                    <div className="navigation-btns-edits">
+                        <button onClick={handleBack}>Back</button>
+                        <button onClick={handleAddingExperience}>Add more experience</button>
+                    </div>
                 </div>
                 {addExpWindow}
                 {editExpWindow}
@@ -391,10 +382,6 @@ export default function Experience() {
                                     <span>|</span>
                                     <span className="job-city">{exp.jobCity}</span>
                                     <ul>
-                                        {/* {exp.responsibilities.map(re => {
-                                            return <li key={uniqid()}>{re}</li>
-                                        })} */}
-
                                         <li>{exp.responsibilities}</li>
                                     </ul>
                                 </div>

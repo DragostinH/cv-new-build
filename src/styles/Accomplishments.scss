@@ -1,5 +1,49 @@
-.accomplishments-container{
+$body-bg: #2e2e2e;
+
+.accomplishments-container {
     display: grid;
     grid-template-columns: 25% 1fr;
     border-bottom: 1px solid black;
+}
+
+.accomplishments-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    #accomplishments-input {
+        width: 100%;
+    }
+
+    >label {
+        text-align: center;
+        width: 50%;
+    }
+
+    #add-accomplishment {
+        text-transform: uppercase;
+        background-color: white;
+        padding: 1rem 5.5rem 1rem 5.5rem;
+        font-size: 1rem;
+        border: 1px solid black;
+        transition: background-color 0.125s ease-in;
+    }
+}
+
+.accomplishments-ul{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    .accomplishment-li{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+// HOVER
+#add-accomplishment:hover {
+    cursor: pointer;
+    background-color: rgba($color: $body-bg, $alpha: 0.3);
 }

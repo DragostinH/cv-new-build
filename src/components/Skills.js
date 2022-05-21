@@ -92,41 +92,39 @@ export default function Skills() {
                 <aside>
                     <header><p>CV Maker</p></header>
                 </aside>
-                <div className="entry-container-skills">
+                <div className="entry-container">
                     <h2 className="edit-page-headline">Add/remove skills</h2>
-                    <div className="skills-form-container">
-                        <form className="add-skill-form" onSubmit={handleSubmit} action="">
-                            <input onChange={handleChange} type="text" name="skill" id="skill-input" value={state.skill.text} />
-                            <input type="submit" name="submit-skill" id="submit-skill" value={"Submit"} />
-                        </form>
-                        <div className="skills-container">
-                            <div className="skills-left">
-                                <span>Skills</span>
-                            </div>
-                            <div className="skills-right">
-                                <div className="skills">
-                                    <ul >
-                                        {firstListArr.map(skill => {
-                                            return (
-                                                <li className="li-skill-entry" key={skill.id} >{skill.text}
-                                                    <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
-                                                </li>
-                                            )
-                                        })
-                                        }
+                    <form className="add-skill-form" onSubmit={handleSubmit} action="">
+                        <input onChange={handleChange} type="text" name="skill" id="skill-input" value={state.skill.text} />
+                        <input type="submit" name="submit-skill" id="submit-skill" value={"Submit"} />
+                    </form>
+                    <div className="skills-container">
+                        <div className="skills-left">
+                            <span>Skills</span>
+                        </div>
+                        <div className="skills-right">
+                            <div className="skills">
+                                <ul >
+                                    {firstListArr.map(skill => {
+                                        return (
+                                            <li className="li-skill-entry" key={skill.id} >{skill.text}
+                                                <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
+                                            </li>
+                                        )
+                                    })
+                                    }
 
-                                    </ul>
-                                    <ul >
-                                        {secondListArr.map(skill => {
-                                            return (
-                                                <li className="li-skill-entry" key={skill.id} >{skill.text}
-                                                    <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
-                                                </li>
-                                            )
-                                        })
-                                        }
-                                    </ul>
-                                </div>
+                                </ul>
+                                <ul >
+                                    {secondListArr.map(skill => {
+                                        return (
+                                            <li className="li-skill-entry" key={skill.id} >{skill.text}
+                                                <button onClick={(e) => handleDelete(e, skill.id)} >Delete</button>
+                                            </li>
+                                        )
+                                    })
+                                    }
+                                </ul>
                             </div>
                         </div>
                     </div>

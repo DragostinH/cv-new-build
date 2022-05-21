@@ -1,28 +1,99 @@
-.education-training-container{
+.education-training-container {
     display: grid;
     grid-template-columns: 25% 1fr;
     border-bottom: 1px solid black;
 }
 
-.degree-info-container{
+.degree-info-container {
     display: flex;
     justify-content: space-between;
 }
-.degree-info{
+
+.degree-info {
     display: flex;
     flex-direction: column;
 }
 
-.degree-name{
+.degree-name {
     margin: 0;
 }
 
-.uni-name-location-container{
+.uni-name-location-container {
     display: flex;
     gap: 0.2rem;
 }
 
 .uni-name,
-.uni-location{
+.uni-location {
     margin: 0;
+}
+
+.education-training-container {
+    grid-column: 1/3;
+}
+
+.add-education-container,
+.edit-education-container {
+    position: absolute;
+    background-color: rgba($color: #000000, $alpha: 0.3);
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-education-window {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    height: 50%;
+    width: 75%;
+    background-color: white;
+    .add-edu-info{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .edu-form{
+        display: grid;
+    }
+}
+
+.add-education {
+    grid-column: 1/3;
+}
+
+.add-education-btn-controls {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    grid-column: 1/3;
+}
+
+.add-education-btn-controls {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    grid-column: 1/3;
+}
+
+
+.add-education-btn-controls>button,
+.add-education-btn-controls>label input {
+    width: 100%;
+    text-transform: uppercase;
+    background-color: white;
+    padding: 1rem 5.5rem 1rem 5.5rem;
+    font-size: 1rem;
+    transition: background-color 0.125s ease-in;
+    border: 1px solid black;
+    margin: 1rem 0 1rem 0;
 }

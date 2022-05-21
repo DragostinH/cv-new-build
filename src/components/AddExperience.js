@@ -2,17 +2,38 @@ import React from "react";
 import { useState } from "react";
 
 export default function AddExperience(props) {
+    const {
+        handleOnChange,
+        handleCancelAddingExp,
+        handleOnSave,
+        handleResponsb,
+        convertToBullets,
+        convertToText,
+        newRespsb,
+        handleContinue } = props;
+
     const [slidePositions, setSlidePositions] = useState({
         left: "0%",
         right: "100%",
     });
 
+    const [formValues, setFormValues] = useState({
+        jobTitle: "",
+        employer: "",
+        country: "",
+        city: "",
+        startDate: "",
+        endDate: "",
+    })
+
     const handleSlideMovementRight = (e) => {
-        setSlidePositions({
-            ...slidePositions,
-            left: "-100%",
-            right: "0%"
-        });
+        if (handleContinue()) {
+            setSlidePositions({
+                ...slidePositions,
+                left: "-100%",
+                right: "0%"
+            });
+        }
     };
 
     const handleSlideMovementLeft = (e) => {
@@ -23,7 +44,7 @@ export default function AddExperience(props) {
         });
     };
 
-    const { handleOnChange, handleCancelAddingExp, handleOnSave, handleResponsb, convertToBullets, convertToText, newRespsb } = props;
+
 
     return (
         <div className="add-experience-container">

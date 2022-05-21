@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Summary.scss"
+import EditSummary from "./EditSummary";
 
 export default function Summary() {
     let element;
 
-    const [state, setState] = React.useState(
+    const [state, setState] = useState(
         {
             input: false,
             summary: "Motivated Front-end programmer seeking to build upon my current skillset and gain hands-on experience in the field. Recognized for outstanding achievements in leadership, customer relations and time management.",
         }
+    );
 
-    )
+    const [editState, setEditState] = useState({
+        summary: "",
+    })
 
 
     const handleSubmit = (e) => {
@@ -18,37 +22,48 @@ export default function Summary() {
         setState({
             ...state,
             input: false,
+            summary: editState.summary,
+        });
+    };
+
+    const handleBack = () => {
+        setState({
+            ...state,
+            input: false,
         })
     }
 
     const handleOnChange = (e) => {
-        setState({
-            ...state,
+        setEditState({
+            ...editState,
             summary: e.target.value,
         });
-    }
+    };
 
-    const handleOnClick = () => {
+    const handleEditSummary = () => {
         setState({
             ...state,
             input: true,
-        })
-    }
+        });
+
+        setEditState({
+            ...editState,
+            summary: state.summary,
+        });
+    };
 
 
     if (state.input) {
         element =
-            <div className="edit-summary-page">
-                <form onSubmit={handleSubmit} action="">
-                    <textarea onChange={handleOnChange} name="summary" value={state.summary} maxLength={350} id="summary" cols="30" rows="10">
-                    </textarea>
-                    <input type="submit" name="submit-summary" id="submit-summary" />
-                </form>
-            </div>
-
+            <EditSummary
+                editState={editState}
+                handleBack={handleBack}
+                handleOnChange={handleOnChange}
+                handleSubmit={handleSubmit}
+            />
     } else {
         element =
-            <div onClick={handleOnClick} className="overlay">
+            <div onClick={handleEditSummary} className="overlay">
                 <div className="summary-container">
                     <div className="left-summary">
                         <span>Summary</span>

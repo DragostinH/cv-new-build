@@ -16,6 +16,7 @@ export default function EditContactAndName(props) {
                 <header><p>CV Maker</p></header>
             </aside>
             <div className="entry-container">
+                <h2>Edit contact information and name</h2>
                 <div className="name-logo">
                     <div className="box">
                         <span>{editState.firstName.charAt(0)}</span>

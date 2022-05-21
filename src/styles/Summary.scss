@@ -8,18 +8,12 @@ border-bottom: 1px solid black;
     text-align: left;
 }
 
-.edit-summary-page{
-   position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    background-color: white;
-}
 
 #summary{
     width: 100%;
+}
+
+#summary-textarea{
+    width: 99%;
+    resize: none;
 }
