@@ -2,31 +2,41 @@ import React, { useState } from "react";
 import AddEducationAndTraining from "./AddEducationAndTraining";
 
 export default function EditEducationAndTraining(props) {
-    const [editEdu, setEditEdu] = useState({
+    const {
+        handleBack,
+        state,
+        convertDates,
+        handleOnChange,
+        handleAddingNewEdu
+    } = props;
+
+    const [addEduState, setAddEduState] = useState({
         addEdu: false,
     });
 
     const handleAddEdu = () => {
-        console.log('add')
-        setEditEdu({
-            ...editEdu,
+        setAddEduState({
+            ...addEduState,
             addEdu: true,
         });
     };
 
     const handleCancelAddingEdu = () => {
-        console.log('cancel')
-        setEditEdu({
-            ...editEdu,
+        setAddEduState({
+            ...addEduState,
             addEdu: false,
-        })
-    }
+        });
+    };
 
-    const {
-        handleBack,
-        latestEntries,
-        convertDates,
-    } = props;
+    const handleSubmit = (e) => {
+        handleAddingNewEdu(e)
+        setAddEduState({
+            ...addEduState,
+            addEdu: false,
+        });
+    };
+
+
 
     return (
         <div className="edit-page">
@@ -35,15 +45,11 @@ export default function EditEducationAndTraining(props) {
             </aside>
             <div className="entry-container">
                 <h2 className="edit-page-headline">Edit/Add your experience</h2>
-                <section className="education-training-container">
-                    <div className="left-education-training">
-                        <span>Education & Training</span>
-                    </div>
-                    <div className="right-education-training">
-                        {latestEntries.educations.map(edu => {
+                <section className="education-training-edit-container">
+                        {state.educations.map(edu => {
                             return (
-                                <div className="degree-info-container">
-                                    <div className="degree-info">
+                                <div key={edu.id} className="degree-info-container">
+                                    <div className="degree-info-edit">
                                         <h4 className="degree-name">{edu.degree}</h4>
                                         <div className="uni-name-location-container">
                                             <span className="uni-name">{edu.schoolName}</span>
@@ -57,7 +63,6 @@ export default function EditEducationAndTraining(props) {
                                 </div>
                             )
                         })}
-                    </div>
                 </section>
                 <div className="navigation-btns-edits">
                     <button onClick={handleBack}>Back</button>
@@ -65,8 +70,10 @@ export default function EditEducationAndTraining(props) {
                 </div>
             </div>
             <AddEducationAndTraining
-                editEdu={editEdu}
+                addEduState={addEduState}
                 handleCancel={handleCancelAddingEdu}
+                newEduEntryOnChange={handleOnChange}
+                handleSubmit={handleSubmit}
             />
         </div>
     );

@@ -7,7 +7,29 @@ export default function Accomplishments() {
     let element;
     const [state, setState] = useState({
         input: false,
-        accomplishments: [],
+        accomplishments:
+            [
+                {
+                    accomplishmentText: "Built calculus 3.0",
+                    id: uniqid(),
+                },
+                {
+                    accomplishmentText: "Created sliced bread 2.0",
+                    id: uniqid(),
+                },
+                {
+                    accomplishmentText: "Banned pineapple on pizza",
+                    id: uniqid(),
+                },
+                {
+                    accomplishmentText: "Used Arch Linux without telling people about it",
+                    id: uniqid(),
+                },
+                {
+                    accomplishmentText: "Beat Elden Ring without dying",
+                    id: uniqid(),
+                },
+            ],
     });
 
     const [accomplishment, setAccomplishment] = useState({
@@ -56,7 +78,7 @@ export default function Accomplishments() {
     const handleDeleteAccomplishment = (e, id) => {
         const currAccomplishments = state.accomplishments;
         const filteredAccomplishments = currAccomplishments.filter(acc => {
-             return acc.id !== id;
+            return acc.id !== id;
         });
 
 

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "../styles/CurrentProjects.scss"
 import EditProjects from "./EditProjects";
+import uniqid from "uniqid";
 
 export default function CurrentProjects() {
     let element;
+    let currProjects
     const [projectsState, setProjectsState] = useState({
-        projectOne: "https://github.com/DragostinH?tab=stars",
+        projectOne: "https://jjbestporfolio.jj",
         projectTwo: "",
         projectThree: "",
     });
@@ -65,9 +67,12 @@ export default function CurrentProjects() {
         });
     };
 
+    currProjects = [projectsState.projectOne, projectsState.projectTwo, projectsState.projectThree];
 
 
-    console.log([projectsState])
+
+
+
     if (inputState.input) {
         element = (
             <EditProjects
@@ -86,7 +91,11 @@ export default function CurrentProjects() {
                     </div>
                     <div className="right-projects">
                         <ul>
-                            
+                            {currProjects.map(proj => {
+                                if (proj !== "") {
+                                    return <li key={uniqid()}>{proj}</li>
+                                }
+                            })}
                         </ul>
                         {element}
                     </div>

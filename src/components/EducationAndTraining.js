@@ -1,8 +1,8 @@
-import { format } from "date-fns";
+import { format } from "date-fns"
+import uniqid from "uniqid";
 import React, { useState } from "react";
 import "../styles/EducationAndTraining.scss"
 import EditEducationAndTraining from "./EditEducationAndTraining.js";
-import AddEducationAndTraining from "./EditEducationAndTraining.js";
 
 
 export default function EducationAndTraining() {
@@ -17,22 +17,48 @@ export default function EducationAndTraining() {
                 field: "Programming",
                 gradDate: "2015-02-29",
                 stillEnrolled: false,
+                id: uniqid(),
             },
 
         ],
     });
 
     const [editState, setEditState] = useState({
-        education: {
-            schoolName: "",
-            schoolLocation: "",
-            degree: "",
-            field: "",
-            gradDate: "",
-            stillEnrolled: false,
-        }
+        schoolName: "",
+        schoolLocation: "",
+        degree: "",
+        field: "",
+        gradDate: "",
+        stillEnrolled: false,
+        id: uniqid(),
+
     });
 
+    const [newEdu, setNewEdu] = useState({
+        schoolName: "",
+        schoolLocation: "",
+        degree: "",
+        field: "",
+        gradDate: "",
+        stillEnrolled: false,
+        id: uniqid(),
+    });
+
+    const handleOnChange = (e) => {
+        setNewEdu({
+            ...newEdu,
+            [e.target.name]: e.target.value,
+            id: uniqid(),
+        });
+    };
+
+    const handleAddingNewEdu = (e) => {
+        e.preventDefault();
+        setState({
+            ...state,
+            educations: state.educations.concat(newEdu),
+        })
+    }
     const handleBack = (e) => {
         setState({
             ...state,
@@ -56,8 +82,10 @@ export default function EducationAndTraining() {
         element =
             <EditEducationAndTraining
                 handleBack={handleBack}
-                latestEntries={state}
+                state={state}
                 convertDates={convertDates}
+                handleOnChange={handleOnChange}
+                handleAddingNewEdu={handleAddingNewEdu}
             />
     } else {
         element =
@@ -69,7 +97,7 @@ export default function EducationAndTraining() {
                     <div className="right-education-training">
                         {state.educations.map(edu => {
                             return (
-                                <div className="degree-info-container">
+                                <div key={uniqid()} className="education-training-entry">
                                     <div className="degree-info">
                                         <h4 className="degree-name">{edu.degree}</h4>
                                         <div className="uni-name-location-container">

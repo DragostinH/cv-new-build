@@ -5,7 +5,24 @@ export default function Skills() {
     let element;
     const [state, setState] = React.useState({
         input: false,
-        skills: [],
+        skills: [
+            {
+                text: "Can code without any input device",
+                id: uniqid(),
+            },
+            {
+                text: "Knows how to center a <div>",
+                id: uniqid(),
+            },
+            {
+                text: "Experience with C+++",
+                id: uniqid(),
+            },
+            {
+                text: "Experience with PythonScript",
+                id: uniqid(),
+            },
+        ],
         skill: {
             text: "",
             id: uniqid(),

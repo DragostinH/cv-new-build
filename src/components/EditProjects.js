@@ -14,6 +14,7 @@ export default function EditProjects(props) {
                 <header><p>CV Maker</p></header>
             </aside>
             <div className="entry-container">
+                <h2>Add/Edit projects</h2>
                 <form className="project-form" onSubmit={handleSubmit} action="">
                     <label htmlFor="projectOne"> <p>Project Link One</p>
                         <input onChange={handleOnChange} value={editState.projectOne}

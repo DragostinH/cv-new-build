@@ -13,7 +13,20 @@ export default function Experience() {
     const [state, setState] = useState({
         input: false,
         addExp: false,
-        experienceList: [],
+        experienceList: [
+            {
+                editExp: false,
+                jobTitle: "Emperor level programmer",
+                employer: "Myself",
+                jobCountry: "Country",
+                jobCity: "City",
+                startDate: "1999-03-10",
+                endDate: "2023-02-02",
+                currentJob: false,
+                responsibilities: 'had to built 3 startups worth $3billion',
+                id: uniqid(),
+            }
+        ],
     });
 
     const [newExpFormData, setNewExpFormData] = useState({
@@ -56,29 +69,6 @@ export default function Experience() {
     const [editResponsibilities, setEditResponsibilities] = useState({
         responsibilities: "",
     })
-
-    // TODO: Add feature where you hide more than 3 rbilities and show them by clicking
-    // ...see more btn.
-    // const seeMoreToggle = () => {
-    //     state.experienceList.forEach(exp => {
-    //         exp.responsibilities.forEach(resp => {
-    //             console.log(resp);
-    //         })
-    //     })
-    // }
-
-    // function toggleBetweenListOrText(state, listOrTextSwitch) {
-    //     state.textOrList ?
-    //         listOrTextSwitch =
-    //         <textarea name="responsb" id="responsb" cols="30" rows="10">
-
-    //         </textarea> :
-    //         listOrTextSwitch =
-    //         <label htmlFor="">
-    //             <input type="text" name="" id="" />
-    //         </label>;
-    //     return listOrTextSwitch;
-    // }
 
     const handleBack = () => {
         setState({
@@ -230,7 +220,16 @@ export default function Experience() {
     };
 
     const handleRemoveExp = (e, id) => {
+        console.log(id);
+        const currExp = state.experienceList;
+        const filteredExp = currExp.filter(el => {
+            return el.id !== id;
+        });
 
+        setState({
+            ...state,
+            experienceList: filteredExp,
+        });
     };
 
 
@@ -252,7 +251,6 @@ export default function Experience() {
             return true;
         };
     };
-
 
 
     const convertToBullets = (e) => {
@@ -282,11 +280,10 @@ export default function Experience() {
         };
     };
 
-    const convertDates = (e) => {
-        const dateArr = e.split('-');
+    const convertDates = (date) => {
+        const dateArr = date.split('-');
         return format(new Date(dateArr[0], dateArr[1] - 1, dateArr[2]), "MMM yyyy");
     }
-
 
 
     if (state.addExp) {
@@ -345,19 +342,18 @@ export default function Experience() {
                                 <div className="job-responsibilities">
                                     <ul>
                                         <li key={uniqid()}>{exp.responsibilities}</li>
-                                        <button>...see more</button>
                                     </ul>
                                 </div>
                                 <div className="edit-add-experience-btns">
                                     <button onClick={(e) => handleEdit(e, exp.id)}>Edit</button>
-                                    <button>Remove</button>
+                                    <button onClick={(e) => handleRemoveExp(e, exp.id)} >Remove</button>
                                 </div>
                             </div>
                         )
                     })}
                     <div className="navigation-btns-edits">
                         <button onClick={handleBack}>Back</button>
-                        <button onClick={handleAddingExperience}>Add more experience</button>
+                        <button onClick={handleAddingExperience}>Add experience</button>
                     </div>
                 </div>
                 {addExpWindow}
@@ -376,7 +372,8 @@ export default function Experience() {
                                 <div key={uniqid()} className="experience-entry">
                                     <div className="title-and-period">
                                         <span className="job-title">{exp.jobTitle}</span>
-                                        <span>{exp.startDate} - {exp.endDate}</span>
+                                        <span>{convertDates(exp.startDate)} -
+                                            {convertDates(exp.endDate)}</span>
                                     </div>
                                     <span className="job-employer">{exp.employer}</span>
                                     <span>|</span>

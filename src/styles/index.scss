@@ -7,9 +7,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: $body-bg;
   box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-;
+#root{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -80,6 +89,15 @@ ul {
   }
 }
 
+
+
+footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  height: 100%;
+}
 
 
 

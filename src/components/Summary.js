@@ -8,7 +8,7 @@ export default function Summary() {
     const [state, setState] = useState(
         {
             input: false,
-            summary: "Motivated Front-end programmer seeking to build upon my current skillset and gain hands-on experience in the field. Recognized for outstanding achievements in leadership, customer relations and time management.",
+            summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui repellat sint ullam. Pariatur aut accusantium, perferendis minus consequatur incidunt suscipit officiis voluptates sit, nam deleniti debitis ab eos provident facere!",
         }
     );
 

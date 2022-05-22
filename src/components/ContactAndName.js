@@ -7,13 +7,13 @@ export default function ContactAndName() {
 
     const [state, setState] = useState({
         input: false,
-        firstName: "Drago",
-        lastName: "Hristov",
-        email: "dragostin.hristov@gmail.com",
-        tel: "+44(0)7565335040",
-        country: "Bulgaria",
-        city: "Sofia",
-        postCode: "1330"
+        firstName: "John",
+        lastName: "Johnson",
+        email: "john.johno@john.jj",
+        tel: "12345657890",
+        country: "Best Country",
+        city: "City",
+        postCode: "Post Code"
     });
 
     const [editState, setEditState] = useState({
