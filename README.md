@@ -1,3 +1,9 @@
+# CV Builder project from The Odin Project
+
+This is the very first project I have created with the React. You can view the live link here -> https://dragostinh.github.io/cv-new-build/
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
